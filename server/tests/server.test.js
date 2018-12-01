@@ -238,7 +238,7 @@ describe('POST /users',()=>{
 });
 describe('POST /users/login',()=>{
 
-  it('should login for valid credentials',()=>{
+  it('should login for valid credentials',(done)=>{
     request(app)
     .post('/users/login')
     .send({
@@ -262,18 +262,7 @@ describe('POST /users/login',()=>{
       }).catch((e)=>done(e));
     });
   });
-/*  it('should not login for invalid credentials',()=>{
-    request(app)
-    .post('/users/login')
-    .send({
-      email:users[1].email,
-      password:'abc678'
-    })
-    .expect(400)
-    .expect((res)=>{
-      expect(res.headers['x-auth']).toNotExist();
-    })
-    .end(done);
-});*/
+
+
 
 });

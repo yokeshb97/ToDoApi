@@ -42,8 +42,8 @@ return _.pick(userObject,['_id','email']);
 UserSchema.methods.generateAuthToken = function () {
   var user=this;
   var access='auth';
-  var token=jwt.sign({_id:user._id.toHexString(),access},'abc234').toString();
-
+  var token=jwt.sign({_id:user._id.toHexString(),access},'abc123').toString();
+  //console.log(token);
   user.tokens = user.tokens.concat([{access,token}]);
 
   return user.save().then(()=>{
@@ -51,14 +51,26 @@ UserSchema.methods.generateAuthToken = function () {
   });
 };
 
+UserSchema.methods.removeToken = function (token) {
+  var user=this;
+
+return  user.update({
+    $pull:{
+      tokens:{token}
+    }
+  });
+
+};
+
 UserSchema.statics.findByToken= function(token){
   var User=this;
   var decoded;
   try{
-    decoded=jwt.verify(token,'abc234');
-  }
+    decoded=jwt.verify(token,'abc123');
+    console.log(decoded);
+    }
   catch(e){
-    return Promise.reject();
+      return Promise.reject();
   }
 
   return User.findOne({
