@@ -13,23 +13,29 @@ const users=[{
   password:'abc123',
   tokens:[{
     access:'auth',
-    token:jwt.sign({_id:user1id,access:'auth'},'abc234').toString()
+    token:jwt.sign({_id:user1id,access:'auth'},'abc123').toString()
   }]
 
 },
 { _id:user2id,
   email:"byokesh@gmail.com",
-  password:'abc123'
+  password:'abc123',
+  tokens:[{
+    access:'auth',
+    token:jwt.sign({_id:user2id,access:'auth'},'abc123').toString()
+  }]
 }];
 
 
 
 const todos=[{
   _id:new ObjectID(),
-  text:"First todo"
+  text:"First todo",
+  _creator:user1id
 },
 { _id:new ObjectID(),
   text:"Second todo",
+  _creator:user2id,
   completed:true,
   completedAt:333
 }];
